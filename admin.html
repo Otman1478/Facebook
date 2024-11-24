@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Panel</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f0f2f5;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .admin-panel {
+            background: #ffffff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            width: 90%;
+            max-width: 600px;
+        }
+
+        .admin-panel h1 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        .logins {
+            margin-top: 20px;
+        }
+
+        .logins table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+        }
+
+        .logins th, .logins td {
+            padding: 10px;
+            text-align: left;
+            border: 1px solid #ccc;
+        }
+
+        .logins th {
+            background: #f0f2f5;
+        }
+
+        .logins td {
+            background: #ffffff;
+        }
+
+        .clear-btn {
+            display: block;
+            margin: 20px auto;
+            padding: 10px 20px;
+            background-color: #ff4d4d;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .clear-btn:hover {
+            background-color: #e63939;
+        }
+    </style>
+</head>
+<body>
+    <div class="admin-panel">
+        <h1>Admin Panel</h1>
+        <p>Total Logins: <span id="totalLogins">0</span></p>
+        <div class="logins">
+            <h3>Login Records</h3>
+            <table id="loginsTable">
+                <tr>
+                    <th>Username</th>
+                    <th>Password</th>
+                    <th>Time</th>
+                </tr>
+            </table>
+        </div>
+        <button class="clear-btn" onclick="clearLogins()">Clear Records</button>
+    </div>
+
+    <script>
+        const loginsTable = document.getElementById('loginsTable');
+        const totalLogins = document.getElementById('totalLogins');
+
+        const logins = JSON.parse(localStorage.getItem('logins')) || [];
+        totalLogins.textContent = logins.length;
+
+        logins.forEach(login => {
+            const row = loginsTable.insertRow();
+            row.insertCell(0).textContent = login.username;
+            row.insertCell(1).textContent = login.password;
+            row.insertCell(2).textContent = login.time;
+        });
+
+        function clearLogins() {
+            localStorage.removeItem('logins');
+            alert('Login records cleared!');
+            location.reload();
+        }
+    </script>
+</body>
+</html>
